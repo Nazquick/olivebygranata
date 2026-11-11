@@ -20,6 +20,17 @@ h1{font-family:var(--serif);font-weight:400;font-size:clamp(3.2rem,9vw,7.5rem);l
 .lead{font-size:clamp(1.05rem,1.5vw,1.3rem);font-weight:500;max-width:30em;margin-top:22px}
 .shot{display:block;width:100%;max-height:72vh;object-fit:contain;filter:drop-shadow(0 14px 0 rgba(10,30,8,.25));animation:bob 4s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-12px) rotate(1.5deg)}}
+.viewer{position:relative;text-align:center}
+.stage3d{position:relative;width:100%;aspect-ratio:4/5;max-height:74vh;margin:0 auto}
+.stage3d canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block;cursor:grab;filter:drop-shadow(0 14px 0 rgba(10,30,8,.22))}
+.stage3d canvas:active{cursor:grabbing}
+.stage3d.ready .shot{display:none}
+.hint{font-family:var(--hand);font-size:1.6rem;color:var(--pink);transform:rotate(-4deg);margin-top:-6px;transition:opacity .4s}
+.hint.gone{opacity:0}
+.vbtns{margin-top:10px}
+button.btn{font:800 1rem var(--sans);cursor:pointer}
+button.btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--pink)}
+button.btn:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
 .card{background:var(--egg);border:3px solid var(--black);border-radius:18px;box-shadow:7px 7px 0 var(--black);padding:20px}
 .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:56px}
 .feats h3{font-family:var(--serif);font-weight:400;font-size:1.6rem;line-height:1.05;margin-bottom:8px}
@@ -32,16 +43,21 @@ td{padding:9px 0;border-top:2px solid rgba(18,48,14,.16)}td:first-child{font-wei
 .more{margin-top:56px;display:flex;gap:14px;flex-wrap:wrap}
 .btn{font-weight:800;text-decoration:none;color:var(--yellow);background:var(--black);border:3px solid var(--black);border-radius:999px;padding:14px 24px;box-shadow:5px 5px 0 var(--pink)}
 .btn.alt{background:var(--egg);color:var(--black);box-shadow:5px 5px 0 var(--black)}
-@media (max-width:820px){.hero,.two{grid-template-columns:1fr}.feats{grid-template-columns:1fr}.shot{max-height:52vh;order:-1}.menu a.hide{display:none}}
+@media (max-width:820px){.hero,.two{grid-template-columns:1fr}.feats{grid-template-columns:1fr}.viewer{order:-1}.stage3d{max-height:56vh}.menu a.hide{display:none}}
 @media (prefers-reduced-motion:reduce){.shot{animation:none}}
 </style></head><body>
 <header class="top"><a href="index.html" aria-label="Ålive home"><img src="img/logo-dark.png" alt="Ålive"></a>
 <nav class="menu" aria-label="Sections"><a class="hide" href="index.html#pack">The pack</a><a class="hide" href="index.html#flavours">Flavours</a><a class="cur" href="index.html#products">Our products</a><a class="hide" href="index.html#heritage">Heritage</a></nav></header>
 <main>
 <section class="hero"><div><p class="kick">Our products · Glass jar</p><h1>Jar<br>450 g</h1><span class="note">same olives, bigger format</span><p class="lead">A glass jar of giant Sicilian green olives, curated by Granata, under the same lid design as the snack pack.</p></div>
-<img class="shot" src="img/jar.webp" alt="Ålive Jar, 450 g"></section>
+<div class="viewer"><div class="stage3d" id="v3d" role="img" aria-label="Ålive Jar, 450 g: 3D model, drag to rotate"><img class="shot" src="img/jar.webp" alt=""></div>
+<p class="hint" id="vhint">drag to rotate</p>
+<div class="vbtns"><button class="btn" id="vbtn" type="button">Open the jar</button></div></div></section>
 <section class="feats"><div class="card"><h3>Clear glass</h3><p>So the olives sell themselves.</p></div><div class="card"><h3>Printed lid</h3><p>The pod lid design, scaled up to a jar lid.</p></div><div class="card"><h3>For the table</h3><p>Aperitivo, lunch, the fridge at home.</p></div></section>
 <section class="two"><div class="card"><table><caption>The pack</caption><tr><td>Net weight</td><td>450 g</td></tr><tr><td>Format</td><td>Round glass jar with twist-off lid</td></tr><tr><td>Size</td><td>Ø 88 mm, 131 mm tall</td></tr><tr><td>Closure</td><td>Twist-off lid, 82 mm</td></tr><tr><td>Olives</td><td>Giant Sicilian green olives, brine-cured</td></tr></table><p class="fine">Proposed pack specification. Final sizes are confirmed with the manufacturer.</p></div>
 <div class="card second"><img src="img/lid.png" alt="The Ålive lid design" loading="lazy" style="margin-top:30px"></div></section>
 <div class="more"><a class="btn" href="bag.html">See the bag →</a><a class="btn alt" href="index.html#products">All products</a><a class="btn alt" href="index.html">The snack pack</a></div>
-</main></body></html>
+</main>
+<script src="js/three.min.js"></script><script src="js/viewer.js"></script>
+<script>window.viewer=window.THREE&&AliveViewer('jar',{el:'v3d',btn:'vbtn',hint:'vhint',open:'Open the jar',close:'Close'});</script>
+</body></html>
