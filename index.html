@@ -61,7 +61,21 @@ body[data-scene="1"] .brand .light,body[data-scene="2"] .brand .light,body[data-
   background-color:var(--bg);transition:background-color .7s ease;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 42%);mask-image:linear-gradient(to bottom,transparent,#000 42%)}
 .stage{position:fixed;left:50%;bottom:max(3.2vh,14px);width:var(--packw);transform:translateX(-50%);z-index:30;pointer-events:none}
 .pack{position:relative;aspect-ratio:2496/884;filter:drop-shadow(0 14px 0 rgba(10,30,8,.28));transition:transform .6s cubic-bezier(.3,1.5,.5,1)}
-.pack>img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none}
+.pack>img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.pack{pointer-events:auto;touch-action:pan-y;cursor:grab}
+.stage{transition:translate .2s ease-in,opacity .2s ease-in}
+.flv{position:absolute;left:50%;bottom:calc(100% + 4px);transform:translateX(-50%);display:flex;align-items:center;gap:6px;pointer-events:auto;white-space:nowrap;
+  color:var(--ink);border:2.5px solid currentColor;border-radius:999px;padding:4px 6px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(6px);transition:color .5s,background-color .7s;z-index:5}
+.flv button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0;display:grid;place-items:center}
+.flv .arr{width:30px;height:30px;border-radius:50%;font-weight:800;font-size:1.05rem;line-height:1}
+.flv .arr:hover{background:color-mix(in srgb,var(--ink) 16%,transparent)}
+.flv .sw{width:22px;height:22px;border-radius:50%;border:2.5px solid currentColor;transition:transform .25s cubic-bezier(.3,1.8,.5,1)}
+.flv .sw[aria-pressed=true]{transform:scale(1.25);box-shadow:0 0 0 2.5px var(--bg),0 0 0 5px currentColor}
+.flv b{font-weight:800;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;min-width:5.6em;text-align:center}
+.flv button:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+.flavours .card{cursor:pointer;transition:transform .2s}
+.flavours .card:hover{transform:translate(-2px,-2px)}
+.flavours .card.sel{outline:4px solid var(--black);outline-offset:3px}
 .pod{position:absolute;border:0;background:none;cursor:pointer;pointer-events:auto;-webkit-tap-highlight-color:transparent;font:inherit}
 .pod:focus-visible{outline:3px solid var(--pink);outline-offset:4px;border-radius:50%}
 .pod span{position:absolute;display:block}
@@ -82,7 +96,7 @@ body[data-scene="1"] .brand .light,body[data-scene="2"] .brand .light,body[data-
   85%{opacity:1}
   100%{opacity:0;transform:translate(var(--dx),-330%) scale(.55) rotate(30deg)}
 }
-.flap{inset:0;border-radius:50%;background-image:url(img/lid.png);background-repeat:no-repeat;transform-origin:50% 4%;
+.flap{inset:0;border-radius:50%;background-image:var(--lid,url(img/lid.png));background-repeat:no-repeat;transform-origin:50% 4%;
   transition:transform .5s cubic-bezier(.3,1.2,.5,1),opacity .25s}
 .tab{background:center/100% 100% no-repeat;transform:scale(1.05);transition:transform .25s cubic-bezier(.3,1.6,.5,1);filter:drop-shadow(0 .12em 0 rgba(10,30,8,.35));z-index:3}
 .pod.next .tab{animation:wiggle 2.2s .8s ease-in-out infinite}
@@ -101,7 +115,7 @@ body[data-scene="1"] .brand .light,body[data-scene="2"] .brand .light,body[data-
 
 /* scenes */
 main{position:relative;z-index:10}
-.scene{min-height:118vh;min-height:118svh;padding:clamp(88px,12vh,150px) clamp(20px,5vw,60px) calc(var(--packh) + 16vh)}
+.scene{min-height:118vh;min-height:118svh;padding:clamp(88px,12vh,150px) clamp(20px,5vw,60px) calc(var(--packh) + 16vh + 30px)}
 .wrap{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(28px,5vw,80px);align-items:start}
 .kick{font-weight:800;font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;display:flex;gap:12px;align-items:center;margin-bottom:22px}
 .kick b{display:grid;place-items:center;width:34px;height:38px;background:var(--yellow);color:var(--black);border:2.5px solid var(--black);border-radius:9px;font-size:1rem;letter-spacing:0;box-shadow:3px 3px 0 var(--black)}
@@ -196,11 +210,11 @@ tr.sub td:first-child{padding-left:16px;opacity:.8}
 @media (max-width:820px){
   :root{--packw:132vw}
   .wrap{grid-template-columns:1fr}
-  .scene{min-height:100vh;min-height:100svh;padding-top:112px;padding-bottom:calc(var(--packh) + 72px)}
-  .stage{left:0;right:0;width:auto;transform:none;bottom:12px;overflow-x:clip}
+  .scene{min-height:100vh;min-height:100svh;padding-top:112px;padding-bottom:calc(var(--packh) + 116px)}
+  .stage{left:0;right:0;width:auto;transform:none;bottom:12px;clip-path:inset(-100vh 0 -40px 0)}
   .pack{width:var(--packw);transform:translateX(var(--pan,3vw));transition:transform .75s cubic-bezier(.3,1,.4,1);filter:drop-shadow(0 8px 0 rgba(10,30,8,.28))}
   .pack.jolt{transform:translateX(var(--pan,3vw)) translateY(4px)}
-  .fade{height:calc(var(--packh) + 40px);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 22px);mask-image:linear-gradient(to bottom,transparent,#000 22px)}
+  .fade{height:calc(var(--packh) + 86px);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 22px);mask-image:linear-gradient(to bottom,transparent,#000 22px)}
   td{padding:7px 0}.card{padding:16px}
   .lead{margin-top:18px}.steps{margin-top:22px;gap:10px}.facts{margin-top:22px}
   .toon.corner{justify-self:start;order:0}
@@ -248,7 +262,15 @@ tr.sub td:first-child{padding-left:16px;opacity:.8}
 
 <div class="fade" aria-hidden="true"></div>
 <div class="stage">
-  <div class="pack" id="pack"><img src="img/lid.png" alt="Ålive snack pack seen from above: five sealed olive pods in a row, each with its own tear-open window"></div>
+  <div class="flv" role="group" aria-label="Flavour">
+    <button class="arr" type="button" data-step="-1" aria-label="Previous flavour">‹</button>
+    <button class="sw" type="button" data-flv="0" aria-label="Original" style="background:#2b651b"></button>
+    <button class="sw" type="button" data-flv="1" aria-label="Garlic" style="background:#ffe200"></button>
+    <button class="sw" type="button" data-flv="2" aria-label="Chilli" style="background:#d61e26"></button>
+    <b id="flvname" aria-live="polite">Original</b>
+    <button class="arr" type="button" data-step="1" aria-label="Next flavour">›</button>
+  </div>
+  <div class="pack" id="pack"><img id="lidimg" src="img/lid.png" alt="Ålive snack pack seen from above: five sealed olive pods in a row, each with its own tear-open window"></div>
 </div>
 
 <main id="top">
@@ -355,15 +377,15 @@ tr.sub td:first-child{padding-left:16px;opacity:.8}
       <div>
         <p class="kick rv"><b>5</b>Recycle the pack</p>
         <div class="titlerow rv"><h2>All gone.</h2><span class="note">so juicy</span></div>
-        <p class="lead rv">Five olives, one at a time, nothing left to dry out. Pick the next pack.</p>
+        <p class="lead rv">Five olives, one at a time, nothing left to dry out. Pick the next pack: tap a flavour or swipe the pack.</p>
         <img class="toon rv" src="img/t5.png" alt="" style="margin-top:22px">
       </div>
       <div class="side">
         <p class="sub rv" style="margin:0">Three flavours</p>
         <div class="flavours rv">
-          <div class="card f-garlic"><span class="swatch"></span><h3>Garlic</h3><small>Yellow pack</small><p>Giant green olives with a proper punch of garlic.</p></div>
-          <div class="card f-chilli"><span class="swatch"></span><h3>Chilli</h3><small>Red pack</small><p>Giant green olives with a warm chilli kick.</p></div>
-          <div class="card f-original"><span class="swatch"></span><h3>Original</h3><small>Green / purple pack</small><p>Just the olive: giant, green, buttery, brine-cured.</p></div>
+          <div class="card f-garlic" data-flv="1" role="button" tabindex="0"><span class="swatch"></span><h3>Garlic</h3><small>Yellow pack</small><p>Giant green olives with a proper punch of garlic.</p></div>
+          <div class="card f-chilli" data-flv="2" role="button" tabindex="0"><span class="swatch"></span><h3>Chilli</h3><small>Red pack</small><p>Giant green olives with a warm chilli kick.</p></div>
+          <div class="card f-original" data-flv="0" role="button" tabindex="0"><span class="swatch"></span><h3>Original</h3><small>Green / purple pack</small><p>Just the olive: giant, green, buttery, brine-cured.</p></div>
         </div>
       </div>
     </div>
@@ -473,6 +495,42 @@ tr.sub td:first-child{padding-left:16px;opacity:.8}
   function req(){if(!tick){tick=true;requestAnimationFrame(update)}}
   window.addEventListener('scroll',req,{passive:true});
   window.addEventListener('resize',req);
+  /* flavours */
+  var FL=[{n:'Original',s:''},{n:'Garlic',s:'-garlic'},{n:'Chilli',s:'-chilli'}],fcur=0,busy=false;
+  var stage=document.querySelector('.stage'),lidimg=document.getElementById('lidimg'),fname=document.getElementById('flvname');
+  FL.forEach(function(f){var im=new Image();im.src='img/lid'+f.s+'.png'});
+  function paint(k){
+    var f=FL[k];lidimg.src='img/lid'+f.s+'.png';pack.style.setProperty('--lid','url(img/lid'+f.s+'.png)');
+    pods.forEach(function(p,i){p.querySelector('.tab').style.backgroundImage='url(img/tab'+(i+1)+f.s+'.png)'});
+    fname.textContent=f.n;
+    [].forEach.call(document.querySelectorAll('.flv .sw'),function(b){b.setAttribute('aria-pressed',+b.dataset.flv===k?'true':'false')});
+    [].forEach.call(document.querySelectorAll('.flavours .card'),function(c){c.classList.toggle('sel',+c.dataset.flv===k)});
+    try{localStorage.setItem('alive-flv',k)}catch(e){}
+  }
+  function setFlv(k,dir){
+    k=(k+FL.length)%FL.length;if(k===fcur||busy)return;busy=true;dir=dir||(k>fcur?1:-1);fcur=k;
+    stage.style.translate=(-dir*80)+'px 0';stage.style.opacity='0';
+    setTimeout(function(){
+      paint(k);stage.style.transition='none';stage.style.translate=(dir*80)+'px 0';void stage.offsetWidth;
+      stage.style.transition='';stage.style.translate='0 0';stage.style.opacity='1';
+      setTimeout(function(){busy=false},220);
+    },210);
+  }
+  [].forEach.call(document.querySelectorAll('.flv button'),function(b){b.addEventListener('click',function(){
+    if(b.dataset.step)setFlv(fcur+ +b.dataset.step,+b.dataset.step);else setFlv(+b.dataset.flv)})});
+  [].forEach.call(document.querySelectorAll('.flavours .card'),function(c){
+    function go(){setFlv(+c.dataset.flv)}
+    c.addEventListener('click',go);c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}})});
+  var sx=null,sy=0,swiped=0;
+  pack.addEventListener('pointerdown',function(e){sx=e.clientX;sy=e.clientY});
+  window.addEventListener('pointerup',function(e){
+    if(sx===null)return;var dx=e.clientX-sx,dy=e.clientY-sy;sx=null;
+    if(Math.abs(dx)>45&&Math.abs(dx)>1.5*Math.abs(dy)){swiped=Date.now();setFlv(fcur+(dx<0?1:-1),dx<0?1:-1)}
+  });
+  window.addEventListener('pointercancel',function(){sx=null});
+  pack.addEventListener('click',function(e){if(Date.now()-swiped<400){e.stopPropagation();e.preventDefault()}},true);
+  try{var sv=+localStorage.getItem('alive-flv');if(sv>0&&sv<FL.length){fcur=sv}}catch(e){}
+  paint(fcur);
   document.getElementById('again').addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
   document.querySelector('.brand').addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'})});
   update();
