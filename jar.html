@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ålive Jar · 450 g</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Schibsted+Grotesk:wght@400..900&family=Young+Serif&display=swap" rel="stylesheet">
+<style>
+:root{--olive:#3f9400;--yellow:#ffe500;--pink:#ff3d7f;--black:#12300e;--egg:#fdfde8;--deep:#0f3310;--sage:#bcd6a4;--serif:"Young Serif",Georgia,serif;--sans:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;--hand:"Caveat Brush",cursive}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:#ffe500;color:var(--black);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px clamp(18px,4vw,44px)}
+.top img{width:46px;height:58px;object-fit:contain;display:block}
+.menu{display:flex;gap:4px;border:2.5px solid var(--black);border-radius:999px;padding:4px;flex-wrap:wrap}
+.menu a{font-weight:800;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:inherit;text-decoration:none;padding:8px 12px;border-radius:999px;white-space:nowrap}
+.menu a:hover{background:rgba(18,48,14,.14)}.menu a.cur{background:var(--black);color:#ffe500}
+main{max-width:1180px;margin:0 auto;padding:clamp(10px,3vh,40px) clamp(20px,5vw,60px) 80px}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,70px);align-items:center}
+.kick{font-weight:800;font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:18px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(3.2rem,9vw,7.5rem);line-height:.92;letter-spacing:-.025em}
+.note{font-family:var(--hand);color:var(--pink);font-size:clamp(1.8rem,3.6vw,3rem);display:inline-block;transform:rotate(-6deg);margin:.1em 0 0 .2em}
+.lead{font-size:clamp(1.05rem,1.5vw,1.3rem);font-weight:500;max-width:30em;margin-top:22px}
+.shot{display:block;width:100%;max-height:72vh;object-fit:contain;filter:drop-shadow(0 14px 0 rgba(10,30,8,.25));animation:bob 4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-12px) rotate(1.5deg)}}
+.card{background:var(--egg);border:3px solid var(--black);border-radius:18px;box-shadow:7px 7px 0 var(--black);padding:20px}
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:56px}
+.feats h3{font-family:var(--serif);font-weight:400;font-size:1.6rem;line-height:1.05;margin-bottom:8px}
+.feats .card:nth-child(2){background:var(--yellow)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px;align-items:start}
+table{width:100%;border-collapse:collapse}caption{text-align:left;font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;padding-bottom:8px}
+td{padding:9px 0;border-top:2px solid rgba(18,48,14,.16)}td:first-child{font-weight:800;width:38%}
+.fine{font-size:.8rem;opacity:.75;margin-top:12px}
+.second img{display:block;width:100%;max-height:340px;object-fit:contain}
+.more{margin-top:56px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{font-weight:800;text-decoration:none;color:var(--yellow);background:var(--black);border:3px solid var(--black);border-radius:999px;padding:14px 24px;box-shadow:5px 5px 0 var(--pink)}
+.btn.alt{background:var(--egg);color:var(--black);box-shadow:5px 5px 0 var(--black)}
+@media (max-width:820px){.hero,.two{grid-template-columns:1fr}.feats{grid-template-columns:1fr}.shot{max-height:52vh;order:-1}.menu a.hide{display:none}}
+@media (prefers-reduced-motion:reduce){.shot{animation:none}}
+</style></head><body>
+<header class="top"><a href="index.html" aria-label="Ålive home"><img src="img/logo-dark.png" alt="Ålive"></a>
+<nav class="menu" aria-label="Sections"><a class="hide" href="index.html#pack">The pack</a><a class="hide" href="index.html#flavours">Flavours</a><a class="cur" href="index.html#products">Our products</a><a class="hide" href="index.html#heritage">Heritage</a></nav></header>
+<main>
+<section class="hero"><div><p class="kick">Our products · Glass jar</p><h1>Jar<br>450 g</h1><span class="note">same olives, bigger format</span><p class="lead">A glass jar of giant Sicilian green olives, curated by Granata, under the same lid design as the snack pack.</p></div>
+<img class="shot" src="img/jar.webp" alt="Ålive Jar, 450 g"></section>
+<section class="feats"><div class="card"><h3>Clear glass</h3><p>So the olives sell themselves.</p></div><div class="card"><h3>Printed lid</h3><p>The pod lid design, scaled up to a jar lid.</p></div><div class="card"><h3>For the table</h3><p>Aperitivo, lunch, the fridge at home.</p></div></section>
+<section class="two"><div class="card"><table><caption>The pack</caption><tr><td>Net weight</td><td>450 g</td></tr><tr><td>Format</td><td>Round glass jar with twist-off lid</td></tr><tr><td>Size</td><td>Ø 88 mm, 131 mm tall</td></tr><tr><td>Closure</td><td>Twist-off lid, 82 mm</td></tr><tr><td>Olives</td><td>Giant Sicilian green olives, brine-cured</td></tr></table><p class="fine">Proposed pack specification. Final sizes are confirmed with the manufacturer.</p></div>
+<div class="card second"><img src="img/lid.png" alt="The Ålive lid design" loading="lazy" style="margin-top:30px"></div></section>
+<div class="more"><a class="btn" href="bag.html">See the bag →</a><a class="btn alt" href="index.html#products">All products</a><a class="btn alt" href="index.html">The snack pack</a></div>
+</main></body></html>

@@ -26,7 +26,8 @@ body[data-scene="3"]{--bg:var(--sage);--ink:var(--black);--head:var(--black);--n
 body[data-scene="4"]{--bg:var(--deep);--ink:var(--egg);--head:var(--yellow);--note:var(--pink);--card:var(--yellow)}
 body[data-scene="5"]{--bg:var(--orange);--ink:var(--black);--head:var(--black);--note:var(--egg);--card:var(--egg)}
 body[data-scene="6"]{--bg:var(--pink);--ink:var(--black);--head:var(--black);--note:var(--yellow);--card:var(--egg)}
-body[data-scene="7"]{--bg:var(--deep);--ink:var(--egg);--head:var(--yellow);--note:var(--pink);--card:var(--egg)}
+body[data-scene="7"]{--bg:var(--sage);--ink:var(--black);--head:var(--black);--note:#e8321a;--card:var(--egg)}
+body[data-scene="8"]{--bg:var(--deep);--ink:var(--egg);--head:var(--yellow);--note:var(--pink);--card:var(--egg)}
 
 /* grain */
 body::before{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.07;mix-blend-mode:multiply;
@@ -37,8 +38,8 @@ body::before{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;op
 .brand{position:relative;width:46px;height:58px;pointer-events:auto;display:block}
 .brand img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .5s}
 .brand .dark{opacity:0}
-body[data-scene="1"] .brand .dark,body[data-scene="2"] .brand .dark,body[data-scene="3"] .brand .dark,body[data-scene="5"] .brand .dark,body[data-scene="6"] .brand .dark{opacity:1}
-body[data-scene="1"] .brand .light,body[data-scene="2"] .brand .light,body[data-scene="3"] .brand .light,body[data-scene="5"] .brand .light,body[data-scene="6"] .brand .light{opacity:0}
+body[data-scene="7"] .brand .dark,body[data-scene="1"] .brand .dark,body[data-scene="2"] .brand .dark,body[data-scene="3"] .brand .dark,body[data-scene="5"] .brand .dark,body[data-scene="6"] .brand .dark{opacity:1}
+body[data-scene="7"] .brand .light,body[data-scene="1"] .brand .light,body[data-scene="2"] .brand .light,body[data-scene="3"] .brand .light,body[data-scene="5"] .brand .light,body[data-scene="6"] .brand .light{opacity:0}
 .count{pointer-events:none;display:flex;align-items:center;gap:10px;font-weight:800;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
   border:2.5px solid currentColor;border-radius:999px;padding:8px 14px 8px 12px;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(6px);transition:color .5s,background-color .7s}
 .dots{display:flex;gap:5px}
@@ -48,7 +49,7 @@ body[data-scene="1"] .brand .light,body[data-scene="2"] .brand .light,body[data-
 /* menu */
 .menu{pointer-events:auto;display:flex;gap:4px;align-items:center;border:2.5px solid var(--ink);border-radius:999px;padding:4px;color:var(--ink);
   background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(6px);transition:color .5s,background-color .7s,border-color .5s}
-.menu a{font-weight:800;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:inherit;text-decoration:none;padding:8px 14px;border-radius:999px;transition:background-color .25s,color .25s}
+.menu a{white-space:nowrap;font-weight:800;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:inherit;text-decoration:none;padding:8px 11px;border-radius:999px;transition:background-color .25s,color .25s}
 .menu a:hover{background:color-mix(in srgb,var(--ink) 16%,transparent)}
 .menu a.cur{background:var(--ink);color:var(--bg)}
 .menu a:focus-visible,.burger:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
@@ -188,7 +189,16 @@ tr.sub td:first-child{padding-left:16px;opacity:.8}
 .again:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--yellow)}
 .again:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--yellow)}
 .render{width:112%;max-width:none;margin:-10px -6% -6px;display:block}
-.heritage .wrap{grid-template-columns:1fr}
+.heritage .wrap,.products .wrap{grid-template-columns:1fr}
+body[data-scene="7"] .stage,body[data-scene="7"] .fade{visibility:hidden}
+.products{min-height:100vh;min-height:100svh;padding-bottom:12vh!important}
+.plist{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:34px;max-width:980px}
+.pcard{display:block;text-decoration:none;color:var(--black);padding:16px 18px 18px;transition:transform .2s}
+.pcard:hover{transform:translate(-3px,-3px)}
+.pcard img{display:block;width:100%;height:clamp(110px,22vh,210px);object-fit:contain;margin-bottom:10px}
+.pcard h3{font-family:var(--serif);font-weight:400;font-size:1.7rem;line-height:1;display:inline-block;margin-right:8px}
+.pcard small{font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.7rem}
+.pcard p{font-size:.9rem;margin-top:6px;font-weight:500}
 .timeline{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:40px;position:relative}
 .timeline li{position:relative;padding:18px 18px 20px}
 .timeline strong{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(2rem,3.6vw,3.2rem);line-height:1}
@@ -218,6 +228,7 @@ tr.sub td:first-child{padding-left:16px;opacity:.8}
   td{padding:7px 0}.card{padding:16px}
   .lead{margin-top:18px}.steps{margin-top:22px;gap:10px}.facts{margin-top:22px}
   .toon.corner{justify-self:start;order:0}
+  .plist{grid-template-columns:1fr;gap:12px;margin-top:22px}.pcard{display:grid;grid-template-columns:84px 1fr;column-gap:14px;align-items:center;padding:12px 14px}.pcard img{grid-row:1/4;height:84px;margin:0}.pcard p{margin-top:2px}
   .timeline{grid-template-columns:1fr;gap:12px;margin-top:28px}.timeline li{display:flex;gap:16px;align-items:baseline;padding:14px 16px}.timeline strong{font-size:1.9rem;flex:none}.timeline span{margin:0}
   .stats{grid-template-columns:1fr 1fr 1fr;gap:8px}.stats .card{padding:12px 10px;box-shadow:4px 4px 0 var(--black)}
   .speech{position:static;display:inline-block;margin-bottom:26px}
@@ -249,7 +260,8 @@ tr.sub td:first-child{padding-left:16px;opacity:.8}
     <a href="#olives" data-to="2">Olives</a>
     <a href="#nutrition" data-to="3">Nutrition</a>
     <a href="#flavours" data-to="5">Flavours</a>
-    <a href="#heritage" data-to="7">Heritage</a>
+    <a href="#products" data-to="7">Our products</a>
+    <a href="#heritage" data-to="8">Heritage</a>
   </nav>
   <div class="right">
     <div class="count" aria-live="polite">
@@ -409,7 +421,21 @@ tr.sub td:first-child{padding-left:16px;opacity:.8}
     </div>
   </section>
 
-  <section class="scene heritage" id="heritage" data-i="7">
+  <section class="scene products" id="products" data-i="7">
+    <div class="wrap">
+      <div>
+        <p class="kick rv">Our products</p>
+        <div class="titlerow rv"><h2>Three ways to stay Ålive.</h2><span class="note">same olives</span></div>
+        <div class="plist rv">
+          <a class="card pcard" href="#pack"><img src="img/snackpack.webp" alt="Ålive snack pack of five pods" loading="lazy"><h3>Snack pack</h3><small>5 olives</small><p>One at a time, the rest stay sealed.</p></a>
+          <a class="card pcard" href="bag.html"><img src="img/bag.webp" alt="Ålive stand-up bag, 350 g" loading="lazy"><h3>Bag</h3><small>350 g</small><p>Stand-up bag that tears open and reseals.</p></a>
+          <a class="card pcard" href="jar.html"><img src="img/jar.webp" alt="Ålive glass jar, 450 g" loading="lazy"><h3>Jar</h3><small>450 g</small><p>Glass jar with the printed Ålive lid.</p></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene heritage" id="heritage" data-i="8">
     <div class="wrap">
       <div>
         <p class="kick rv">Heritage</p>
@@ -534,6 +560,7 @@ tr.sub td:first-child{padding-left:16px;opacity:.8}
   document.getElementById('again').addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
   document.querySelector('.brand').addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'})});
   update();
+  if(location.hash){var t=document.getElementById(location.hash.slice(1));if(t)setTimeout(function(){t.scrollIntoView()},60)}
 })();
 </script>
 </body>
