@@ -17,7 +17,7 @@ window.AliveViewer=function(kind,opts){
   function tex(u){var t=loader.load(u,draw);t.encoding=T.sRGBEncoding;t.anisotropy=renderer.capabilities.getMaxAnisotropy();return t}
   var GREEN=new T.Color(0x2b651b).convertSRGBToLinear(),SILVER=0xcfd3d6,OLIVE=new T.Color(0x6f8a12).convertSRGBToLinear();
   var oliveGeo=new T.SphereGeometry(1,28,20),oliveMat=new T.MeshStandardMaterial({color:OLIVE,roughness:.28,metalness:0});
-  function olive(s){var m=new T.Mesh(oliveGeo,oliveMat);m.scale.set(.93*s,1.3*s,.9*s);return m}
+  function olive(s){var m=new T.Mesh(oliveGeo,oliveMat);s*=1.1;m.scale.set(.93*s,1.3*s,.9*s);m.userData.s=s;return m}
   var open=0,target=0,update,centerY,dist;
 
   if(kind==='bag'){
@@ -25,7 +25,7 @@ window.AliveViewer=function(kind,opts){
     function depth(u,v,o){
       var uu=Math.min(1,Math.abs(u)/.94),sx=uu<1?Math.pow(1-Math.pow(uu,2.4),.62):0;
       var base=Math.max(.03,(D/2)*sx*Math.pow(1-sm(.05,.9,v),.85));
-      var mouth=o*2.5*Math.pow(Math.max(0,1-u*u),.55)*sm(.5,VT,v);
+      var mouth=sm(.3,.72,o)*2.7*Math.pow(Math.max(0,1-u*u),.5)*sm(.5,VT,v);
       return base+mouth;
     }
     function panel(sign,v0,v1,ny){
@@ -39,7 +39,7 @@ window.AliveViewer=function(kind,opts){
     }
     function shape(g,o){var p=g.attributes.position.array,d=g.userData;
       for(var j=0;j<=d.ny;j++)for(var i=0;i<=NX;i++){var k=(j*(NX+1)+i)*3,u=-1+2*i/NX,v=d.v0+(d.v1-d.v0)*j/d.ny;
-        var pinch=1-.05*(1-sm(0,.5,v))-o*.035*sm(.5,VT,v);
+        var pinch=1-.05*(1-sm(0,.5,v))-sm(.3,.72,o)*.035*sm(.5,VT,v);
         p[k]=u*W/2*pinch;p[k+1]=v*H;p[k+2]=d.sign*depth(u,v,o)}
       g.attributes.position.needsUpdate=true;g.computeVertexNormals()}
     var mats={f:new T.MeshStandardMaterial({map:tex('img/tex-bag-front.jpg'),roughness:.55}),b:new T.MeshStandardMaterial({map:tex('img/tex-bag-back.jpg'),roughness:.55}),
@@ -50,14 +50,15 @@ window.AliveViewer=function(kind,opts){
       stripG.add(new T.Mesh(g,m));var im=mats.i.clone();im.transparent=true;stripMats.push(im);stripG.add(new T.Mesh(g,im))});
     stripG.position.set(-W/2,H*VT,0);root.add(stripG);
     var ols=[],spots=[[-4.3,-.2,.5,.3],[-1.5,.75,-.4,-.5],[1.4,.3,.6,.9],[4.1,-.5,-.3,.2],[-2.9,-1.9,-.6,1.3],[.1,-1.6,.2,-.9],[2.9,-2.1,-.5,.6]];
-    spots.forEach(function(s){var o=olive(.92);o.position.set(s[0],0,s[2]);o.rotation.set(s[3],s[3]*2,s[3]*.7+.3);o.userData=s;root.add(o);ols.push(o)});
+    spots.forEach(function(s){var o=olive(.92);o.position.set(s[0]*.9,0,s[2]*.7);o.rotation.set(s[3],s[3]*2,s[3]*.7+.3);o.userData.p=s;root.add(o);ols.push(o)});
     update=function(o){
       body.forEach(function(g){shape(g,o)});
-      var a=sm(0,.55,o),b=sm(.45,1,o);
+      var a=sm(0,.3,o),b=sm(.22,.6,o);
       stripG.rotation.z=a*.75;stripG.position.set(-W/2-b*5,H*VT+b*9,b*2);stripG.rotation.y=b*.8;
       stripMats.forEach(function(m){m.opacity=1-b});stripG.visible=b<.99;
-      var r=back(sm(.35,1,o));
-      ols.forEach(function(ol){ol.visible=o>.3;ol.position.y=H*VT-3.2+r*(3.1+ol.userData[1])})};
+      var t=sm(.66,1,o),r=back(t),g=sm(.66,.8,o);
+      ols.forEach(function(ol){var k=ol.userData.s*Math.max(.001,g);ol.visible=o>.66;ol.scale.set(.93*k,1.3*k,.9*k);
+        ol.position.y=H*VT-2.6+r*(2.5+ol.userData.p[1])})};
   }else{
     var R=4.4;centerY=6.9;dist=48;
     var prof=[[.01,0],[3.6,0],[4.1,.22],[4.38,.8],[R,1.6],[R,10],[4.3,10.7],[4.05,11.3],[3.9,11.7],[3.9,12.5]].map(function(p){return new T.Vector2(p[0],p[1])});
@@ -79,14 +80,14 @@ window.AliveViewer=function(kind,opts){
     lid.position.y=11.6;lid.renderOrder=4;root.add(lid);
     update=function(o){
       var tw=sm(0,.4,o),up=sm(.25,.8,o),tilt=sm(.5,1,o);
-      lid.rotation.y=-tw*1.6;lid.position.set(tilt*4.6,11.6+up*2.6+tilt*.2,-tilt*1.5);lid.rotation.z=-tilt*1.05;
+      lid.rotation.y=-tw*1.6;lid.position.set(tilt*3.4,11.6+up*6.6,-tilt*1.0);lid.rotation.z=-tilt*.5;lid.rotation.x=-tilt*.25;
       var r=back(sm(.5,1,o));jo.forEach(function(ol){ol.position.y=ol.userData.y+r*ol.userData.lift})};
   }
   cam.position.set(0,centerY+dist*.2,dist);cam.lookAt(0,centerY,0);
   var rotY=-.45,rotX=0,vel=0,auto=true,dragging=false,lx=0,ly=0,dirty=true,last=0;
   function size(){var w=box.clientWidth,h=box.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);cam.aspect=w/h;
-    var need=(kind==='bag'?30:21.5)/(2*Math.tan(cam.fov*Math.PI/360));var d=Math.max(dist,need/Math.min(1,cam.aspect*1.25));
-    cam.position.set(0,centerY+d*.2,d);cam.lookAt(0,centerY+(kind==='bag'?.6:1.6),0);cam.updateProjectionMatrix();dirty=true}
+    var need=(kind==='bag'?30:27.5)/(2*Math.tan(cam.fov*Math.PI/360));var d=Math.max(dist,need/Math.min(1,cam.aspect*1.25));
+    cam.position.set(0,centerY+d*.2,d);cam.lookAt(0,centerY+(kind==='bag'?.6:4.0),0);cam.updateProjectionMatrix();dirty=true}
   function draw(){dirty=true}
   var el=renderer.domElement;el.style.touchAction='pan-y';
   el.addEventListener('pointerdown',function(e){dragging=true;auto=false;lx=e.clientX;ly=e.clientY;vel=0;try{el.setPointerCapture(e.pointerId)}catch(_){}if(hint)hint.classList.add('gone')});
